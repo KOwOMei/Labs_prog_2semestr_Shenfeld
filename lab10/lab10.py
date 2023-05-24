@@ -32,3 +32,28 @@ if ask.capitalize() in ("Yes","Y", "Да", "Д"):
     # Обновляем файл
     with open('products.json', 'w') as file:
         json.dump(data, file)
+
+# Открываем файл для чтения
+with open('en-ru.txt', 'r') as f:
+    # Создаем словарь
+    dictionary = {}
+    for line in f:
+        # Разбиваем строку на английские и русские слова
+        parts = line.strip().split(' - ')
+        if len(parts) < 2: 
+            # Если получено меньше двух элементов, то строка не является валидной и мы ее пропускаем
+            continue
+        eng_word, rus_words = parts[0], parts[1]
+        if eng_word in dictionary:
+            dictionary[eng_word].extend(rus_words.split(', '))
+        else:
+            dictionary[eng_word] = rus_words.split(', ')
+
+# Сортируем элементы словаря по ключам
+sorted_dict = dict(sorted(dictionary.items()))
+
+# Открываем файл для записи
+with open('ru-en.txt', 'w') as f:
+    # Выводим отсортированные элементы словаря в файл ru-en.txt
+    for eng_word, rus_words in sorted_dict.items():
+        f.write('{} - {}\n'.format(', '.join(rus_words), eng_word))
