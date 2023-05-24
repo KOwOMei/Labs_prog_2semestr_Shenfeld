@@ -43,6 +43,9 @@ class IceCreamStand(Restaurant):
         else:
             print("This ice cream flavor is not available.")
 
+    def check_place_and_time(self):
+        print(f"{self.restaurant_name} is working for {self.work_time} at the {self.location}. Don't miss it!")
+
 class IceCreamBar(IceCreamStand):
     def __init__(self, restaurant_name, cuisine_type, flavors, location, work_time, stick_icecream_flavors):
         super().__init__(restaurant_name, cuisine_type, flavors, location, work_time)
@@ -54,6 +57,7 @@ class IceCreamBar(IceCreamStand):
             print("- " + flavor)
 
 myIceCreamStand = IceCreamStand("Frosty", "Ice Cream Cafe", ["vanilla", "strawberry", "chocolate"], "Lenin avenue, 10", "10:00-22:00")
+myIceCreamStand.check_place_and_time()
 myIceCreamStand.show_flavors()
 myIceCreamStand.add_flavor("caramel")
 myIceCreamStand.remove_flavor("chocolate")
