@@ -3,55 +3,51 @@ import os
 import random
 
 holiday_cards = {
-    "Happy 8Day": "birthday_card.png",
+    "Happy Birthday": "birthday_card.png",
     "New Year": "new_year_card.png",
     "Valentine's Day": "valentine_card.png"
 }
 
-holiday_name = input("Print the name of the holiday: ")
+holiday_name = input("Enter the name of the holiday: ")
 if holiday_name in holiday_cards:
     card_file = holiday_cards[holiday_name]
     card_img = Image.open(card_file)
     card_img.show()
 
-    # Запрос координаты начала обрезки
-    left = int(input("Введите X-координату левого верхнего угла: "))
-    top = int(input("Введите Y-координату левого верхнего угла: "))
+    # Request for cropping coordinates
+    left = int(input("Enter the X-coordinate of the top-left corner: "))
+    top = int(input("Enter the Y-coordinate of the top-left corner: "))
 
-    # Запрос размера кадра
-    width = int(input("Введите ширину кадра: "))
-    height = int(input("Введите высоту кадра: "))
+    # Request for cropped frame size
+    width = int(input("Enter the width of the frame: "))
+    height = int(input("Enter the height of the frame: "))
 
-    # Вырезаем кадр
+    # Crop the image
     cropped_card = card_img.crop((left, top, left + width, top + height))
 
-    # Сохраняем изображение в текущую директорию с новым именем
-    new_filename = "cropped_" + card_file
-    cropped_card.save(new_filename)
+    # Save the new image with a different name 
+    cropped_card.save(f"cropped_{card_file}")
 
-    # Запрос имени для поздравления
-    name = input("Кого мы будем поздравлять? ")
+    # Request for the name to congratulate
+    name = input("Who are we congratulating? ")
 
-    # Создание объекта ImageDraw для написания текста 
+    # Create an ImageDraw object to write text
     draw = ImageDraw.Draw(cropped_card)
 
-    # Настройка параметров шрифта и цвета
+    # Set font and color options
     font_size = 30
     font = ImageFont.truetype("arial.ttf", font_size)
-    text_color = (255, 0, 0)  # красный
+    text_color = (255, 0, 0)  # red
 
-    # Рассчет координат, по которым расположим текст "Имя, поздравляю!"
+    # Calculate the coordinates for the "Name, congratulations!" text
     text_width, text_height = draw.textsize(name, font=font)
-    x = (cropped_card.width - text_width) // 2  # по центру
-    y = cropped_card.height * 0.1  # вверху
+    x = 0  # centered
+    y = cropped_card.height * 0.1  # top
 
-    # Добаление текста на полученное изображение
-    draw.text((x, y), f"{name}, поздравляю!", fill=text_color, font=font)
+    # Add text to the cropped image
+    draw.text((x, y), f"{name}, congrats! {holiday_name}!", fill=text_color, font=font)
 
-    # Сохраняем новое изображение
-    new_filename = "greeting_" + card_file
-    cropped_card.save(new_filename)
+    # Save the new image
+    cropped_card.save(f"greeting_{card_file}")
 else:
-    print("Праздник не найден :(")
-
-
+    print("Holiday not found :(")
