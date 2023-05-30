@@ -49,5 +49,7 @@ if holiday_name in holiday_cards:
 
     # Save the new image
     cropped_card.save(f"greeting_{card_file}")
+    print("Here's your card!")
+    cropped_card.show()
 else:
     print("Holiday not found :(")
